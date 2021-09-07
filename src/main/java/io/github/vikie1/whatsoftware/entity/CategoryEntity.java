@@ -23,6 +23,7 @@ public class CategoryEntity {
     public String getSoftware() { return software; }
     public String getNestedCategory() { return nestedCategory; }
 
+    public void setId(Long id) { this.id = id; }
     public void setCatName(String catName) { this.catName = catName; }
     public void setSoftware(String software) { this.software = software; }
     public void setNestedCategory(String nestedCategory) { this.nestedCategory = nestedCategory; }
