@@ -8,7 +8,9 @@ public class CategoryEntity {
     private Long id;
     @Column(nullable = false)
     private String catName;
+    @Column(unique = true)
     private String software;
+    @Column(unique = true)
     private String nestedCategory;
 
     public CategoryEntity(){}

@@ -22,6 +22,7 @@ public class TypeEntity {
     public String getType() { return type; }
     public String getSoftware() { return software; }
 
+    public void setId(Long id) { this.id = id; }
     public void setType(String type) { this.type = type; }
     public void setSoftware(String software) { this.software = software; }
 }

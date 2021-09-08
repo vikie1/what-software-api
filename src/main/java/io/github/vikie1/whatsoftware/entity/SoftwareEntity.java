@@ -25,6 +25,7 @@ public class SoftwareEntity {
     public String getDescription() { return description; }
     public String getDownloadUrl() { return downloadUrl; }
 
+    public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
     public void setDescription(String description) { this.description = description; }
     public void setDownloadUrl(String downloadUrl) { this.downloadUrl = downloadUrl; }

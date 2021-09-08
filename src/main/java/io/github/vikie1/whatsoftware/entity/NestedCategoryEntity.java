@@ -11,6 +11,7 @@ public class NestedCategoryEntity {
     private String parentCategory;
     @Column(nullable = false)
     private String catName;
+    @Column(unique = true)
     private String software;
     private String nestedCategory;
 
@@ -28,6 +29,7 @@ public class NestedCategoryEntity {
     public String getCatName() { return catName; }
     public String getNestedCategory() { return nestedCategory; }
 
+    public void setId(Long id) { this.id = id; }
     public void setParentCategory(String parentCategory) { this.parentCategory = parentCategory; }
     public void setSoftware(String software) { this.software = software; }
     public void setCatName(String catName) { this.catName = catName; }

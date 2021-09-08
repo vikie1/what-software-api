@@ -20,9 +20,17 @@ public class CategoryService {
     //Read
     public List<CategoryEntity> getAllCategories(){ return new ArrayList<CategoryEntity>(categoryRepository.findAll()); }
     public List<CategoryEntity> getAllByCategory(String category) { return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category)); }
-    public List<CategoryEntity> getAllBySoftwareName(String software){ return new ArrayList<CategoryEntity>(categoryRepository.findAllBySoftwareAllIgnoreCase(software)); }
+    public List<CategoryEntity> getAllSoftwareByName(String software){ return new ArrayList<CategoryEntity>(categoryRepository.findAllBySoftwareAllIgnoreCase(software)); }
     public List<CategoryEntity> getAllByNestedCategory(String nestedCategory){
         return new ArrayList<CategoryEntity>(categoryRepository.findAllByNestedCategoryAllIgnoreCase(nestedCategory));
+    }
+    public List<CategoryEntity> getCategoriesBySoftwareName(String software){
+        CategoryEntity category = categoryRepository.findBySoftwareAllIgnoreCase(software);
+        return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category.getCatName()));
+    }
+    public List<CategoryEntity> getCategoriesByNestedCategory(String nestedCategory){
+        CategoryEntity category = categoryRepository.findByNestedCategoryAllIgnoreCase(nestedCategory);
+        return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category.getCatName()));
     }
 
     //Update
