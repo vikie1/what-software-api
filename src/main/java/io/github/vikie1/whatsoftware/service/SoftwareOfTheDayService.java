@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,8 +27,13 @@ public class SoftwareOfTheDayService {
     public SoftwareOfTheDayEntity getSoftwareOfTheDayByName(String softwareOfTheDay) {
         return softwareOfTheDayRepository.findBySoftwareAllIgnoreCase(softwareOfTheDay);
     }
-    public List<SoftwareOfTheDayEntity> getWeeklySoftware() {
-        return new ArrayList<SoftwareOfTheDayEntity>(softwareOfTheDayRepository.findAll());
+    public HashMap<String, SoftwareOfTheDayEntity> getWeeklySoftware() {
+        HashMap<String, SoftwareOfTheDayEntity> weeklyStarred = new HashMap<>();
+        List<SoftwareOfTheDayEntity> software = softwareOfTheDayRepository.findAll();
+        for (SoftwareOfTheDayEntity softwareOfTheDay: software) {
+            weeklyStarred.put(softwareOfTheDay.getDate(), softwareOfTheDay);
+        }
+        return weeklyStarred;
     }
 
     //Update

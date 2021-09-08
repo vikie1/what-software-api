@@ -1,9 +1,8 @@
 package io.github.vikie1.whatsoftware.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 @Entity @Table(name = "software_of_the_day")
 public class SoftwareOfTheDayEntity {
@@ -11,6 +10,7 @@ public class SoftwareOfTheDayEntity {
     private Long id;
     @Column(unique = true)
     private String software;
+    @Lob @Type(type = "org.hibernate.type.TextType")
     private String description;
     private String downloadUrl;
     @Column(unique = true)
