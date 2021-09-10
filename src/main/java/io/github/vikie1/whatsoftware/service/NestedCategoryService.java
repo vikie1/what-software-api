@@ -21,7 +21,7 @@ public class NestedCategoryService {
     public List<NestedCategoryEntity> getAllByNestedCategory(String nestedCategory){
         return new ArrayList<NestedCategoryEntity>(nestedCategoryRepository.findAllByCatNameAllIgnoreCase(nestedCategory));
     }
-    public List<NestedCategoryEntity> getByParentCategory(String parentCategory){
+    public List<NestedCategoryEntity> getByParentCategory(String parentCategory){//no software expected
         return new ArrayList<NestedCategoryEntity>(nestedCategoryRepository.findAllByParentCategoryAllIgnoreCase(parentCategory));
     }
     public List<NestedCategoryEntity> getBySoftwareName(String software){
@@ -29,8 +29,8 @@ public class NestedCategoryService {
         return new ArrayList<NestedCategoryEntity>(nestedCategoryRepository.findAllByCatNameAllIgnoreCase(nestedCategory.getCatName()));
     }
     public List<NestedCategoryEntity> getAllNestedNestedCategory(String nestedCategory){
-        NestedCategoryEntity nestedCategoryEntity = nestedCategoryRepository.findByNestedCategoryAllIgnoreCase(nestedCategory);
-        return new ArrayList<NestedCategoryEntity>(nestedCategoryRepository.findAllByCatNameAllIgnoreCase(nestedCategoryEntity.getNestedCategory()));
+        NestedCategoryEntity nestedCategoryEntity = nestedCategoryRepository.findByCatNameAllIgnoreCaseAndSoftware(nestedCategory, null, NestedCategoryEntity.class);
+        return new ArrayList<NestedCategoryEntity>(nestedCategoryRepository.findAllByParentCategoryAllIgnoreCase(nestedCategoryEntity.getCatName()));
     }
 
     //Update

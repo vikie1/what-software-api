@@ -1,9 +1,11 @@
 package io.github.vikie1.whatsoftware.entity;
 
+import io.github.vikie1.whatsoftware.pojo.CategoryEntitiesAbstraction;
+
 import javax.persistence.*;
 
 @Entity @Table(name = "category")
-public class CategoryEntity {
+public class CategoryEntity extends CategoryEntitiesAbstraction {
     @Id @Column(name = "id", nullable = false) @GeneratedValue
     private Long id;
     @Column(nullable = false)

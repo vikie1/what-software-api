@@ -9,7 +9,7 @@ public interface NestedCategoryRepository extends JpaRepository<NestedCategoryEn
     List<NestedCategoryEntity> findAllByCatNameAllIgnoreCase(String catName);
     NestedCategoryEntity findBySoftwareAllIgnoreCase(String software);
     List<NestedCategoryEntity> findAllByParentCategoryAllIgnoreCase(String parentCategory);
-    NestedCategoryEntity findByNestedCategoryAllIgnoreCase(String nestedCategory);
+    <T> T findByCatNameAllIgnoreCaseAndSoftware(String catName, String software, Class<T> type);
     boolean existsBySoftwareAllIgnoreCase(String software);
     void deleteBySoftwareAllIgnoreCase(String software);
 }
