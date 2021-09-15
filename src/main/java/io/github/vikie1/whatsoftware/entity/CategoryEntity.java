@@ -3,6 +3,7 @@ package io.github.vikie1.whatsoftware.entity;
 import io.github.vikie1.whatsoftware.pojo.CategoryEntitiesAbstraction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity @Table(name = "category")
 public class CategoryEntity extends CategoryEntitiesAbstraction {
@@ -14,6 +15,8 @@ public class CategoryEntity extends CategoryEntitiesAbstraction {
     private String software;
     @Column(unique = true)
     private String nestedCategory;
+    @OneToMany(mappedBy = "categoryEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<TypeEntity> typeEntity;
 
     public CategoryEntity(){}
     public CategoryEntity(String catName, String software, String nestedCategory) {

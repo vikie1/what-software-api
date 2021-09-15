@@ -21,7 +21,8 @@ public class DeriveEntityFromPojo {
         return new SoftwareEntity(
                 softwareAttributesPojo.getSoftwareName(),
                 softwareAttributesPojo.getDescription(),
-                softwareAttributesPojo.getDownloadUrl()
+                softwareAttributesPojo.getDownloadUrl(),
+                constructTypeEntity(softwareAttributesPojo)
         );
     }
 
@@ -29,7 +30,8 @@ public class DeriveEntityFromPojo {
     static public TypeEntity constructTypeEntity(@NonNull SoftwareAttributesPojo softwareAttributesPojo){
         return new TypeEntity(
                 softwareAttributesPojo.getType(),
-                softwareAttributesPojo.getSoftwareName()
+                constructCategory(softwareAttributesPojo),
+                softwareAttributesPojo.isNested()
         );
     }
 

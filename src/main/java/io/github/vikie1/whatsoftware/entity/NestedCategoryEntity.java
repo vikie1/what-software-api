@@ -3,6 +3,7 @@ package io.github.vikie1.whatsoftware.entity;
 import io.github.vikie1.whatsoftware.pojo.CategoryEntitiesAbstraction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * By default, parentCategories are categories in the CategoryEntity Class
@@ -21,6 +22,8 @@ public class NestedCategoryEntity extends CategoryEntitiesAbstraction {
     private String catName;
     @Column(unique = true)
     private String software;
+    @OneToMany(mappedBy = "nestedCategoryEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<TypeEntity> typeEntity;
 
     public NestedCategoryEntity(){}
     public NestedCategoryEntity(String parentCategory, String catName, String software) {

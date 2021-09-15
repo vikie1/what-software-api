@@ -1,6 +1,9 @@
 package io.github.vikie1.whatsoftware.entity;
 
+import io.github.vikie1.whatsoftware.pojo.CategoryEntitiesAbstraction;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity @Table(name = "type")
 public class TypeEntity {
@@ -9,20 +12,35 @@ public class TypeEntity {
     private Long id;
     @Column(nullable = false)
     private String type;
-    @Column(unique = true)
-    private String software;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "typeEntity", cascade = CascadeType.ALL)
+    private Set<SoftwareEntity> software;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cat_id")
+    private CategoryEntity categoryEntity;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "nested_cat_id")
+    private NestedCategoryEntity nestedCategoryEntity;
+
 
     public TypeEntity(){}
-    public TypeEntity(String type, String software) {
+    public TypeEntity(String type, CategoryEntitiesAbstraction categoryEntitiesAbstraction, boolean isNested) {
         this.type = type;
-        this.software = software;
+        if (isNested) setCategoryEntity((CategoryEntity) categoryEntitiesAbstraction);
+        else setNestedCategoryEntity((NestedCategoryEntity) categoryEntitiesAbstraction);
     }
 
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
+    }
     public Long getId() { return id; }
     public String getType() { return type; }
-    public String getSoftware() { return software; }
+    public Set<SoftwareEntity> getSoftware() { return software; }
 
     public void setId(Long id) { this.id = id; }
+    public void setCategoryEntity(CategoryEntity cat) { this.categoryEntity = cat; }
+
+    public void setNestedCategoryEntity(NestedCategoryEntity nestedCategoryEntity) { this.nestedCategoryEntity = nestedCategoryEntity; }
     public void setType(String type) { this.type = type; }
-    public void setSoftware(String software) { this.software = software; }
+    public void setSoftware(Set<SoftwareEntity> software) { this.software = software; }
 }
