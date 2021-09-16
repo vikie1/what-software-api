@@ -14,8 +14,7 @@ public class SoftwareEntity {
     private String description;
     @Column(nullable = false)
     private String downloadUrl;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "types_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "types_id")
     private TypeEntity typeEntity;
 
     public SoftwareEntity(){}

@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
-    List<CategoryEntity> findAllByCatNameAllIgnoreCase(String catName);
-    List<CategoryEntity> findAllBySoftwareAllIgnoreCase(String software);
+    <T> T findAllByCatNameAllIgnoreCase(String catName);
+    //List<CategoryEntity> findAllBySoftwareAllIgnoreCase(String software);
     List<CategoryEntity> findAllByNestedCategoryAllIgnoreCase(String nestedCategory);
-    CategoryEntity findBySoftwareAllIgnoreCase(String software);
+    //CategoryEntity findBySoftwareAllIgnoreCase(String software);
     CategoryEntity findByNestedCategoryAllIgnoreCase(String nestedCategory);
-    boolean existsBySoftwareAllIgnoreCase(String software);
+    //boolean existsBySoftwareAllIgnoreCase(String software);
     boolean existsByNestedCategoryAllIgnoreCase(String nestedCategory);
-    void deleteBySoftwareAllIgnoreCase(String software);
+    boolean existsByCatNameAllIgnoreCase(String catName);
+    //void deleteBySoftwareAllIgnoreCase(String software);
 }

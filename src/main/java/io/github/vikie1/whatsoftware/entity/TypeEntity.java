@@ -15,19 +15,17 @@ public class TypeEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "typeEntity", cascade = CascadeType.ALL)
     private Set<SoftwareEntity> software;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cat_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "cat_id")
     private CategoryEntity categoryEntity;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "nested_cat_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "nested_cat_id")
     private NestedCategoryEntity nestedCategoryEntity;
 
 
     public TypeEntity(){}
     public TypeEntity(String type, CategoryEntitiesAbstraction categoryEntitiesAbstraction, boolean isNested) {
         this.type = type;
-        if (isNested) setCategoryEntity((CategoryEntity) categoryEntitiesAbstraction);
-        else setNestedCategoryEntity((NestedCategoryEntity) categoryEntitiesAbstraction);
+        if (!isNested) setCategoryEntity(categoryEntitiesAbstraction.getCategory());
+        else setNestedCategoryEntity(categoryEntitiesAbstraction.getNestedCategory());
     }
 
     public CategoryEntity getCategoryEntity() {

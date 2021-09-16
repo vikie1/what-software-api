@@ -37,19 +37,25 @@ public class DeriveEntityFromPojo {
 
     //Create **CategoryEntity via CategoryEntitiesAbstraction
     static public CategoryEntitiesAbstraction constructCategory(@NonNull SoftwareAttributesPojo softwareAttributesPojo){
-        if (softwareAttributesPojo.isNested()) {
-            return new NestedCategoryEntity(
-                    softwareAttributesPojo.getParentCategory(),
-                    softwareAttributesPojo.getCategory(),
-                    softwareAttributesPojo.getSoftwareName()
-            );
-        }else{
-            return new CategoryEntity(
-                    softwareAttributesPojo.getCategory(),
-                    softwareAttributesPojo.getSoftwareName(),
-                    null
-            );
-        }
+        CategoryEntitiesAbstraction category;
+        if (softwareAttributesPojo.isNested())
+            category = new CategoryEntitiesAbstraction(null, createNestedCategory(softwareAttributesPojo));
+        else category = new CategoryEntitiesAbstraction(createCategory(softwareAttributesPojo), null);
+        return category;
+    }
+
+    private static NestedCategoryEntity createNestedCategory(SoftwareAttributesPojo softwareAttributesPojo){
+        return new NestedCategoryEntity(
+                softwareAttributesPojo.getParentCategory(),
+                softwareAttributesPojo.getCategory(),
+                softwareAttributesPojo.getSoftwareName()
+        );
+    }
+    private static CategoryEntity createCategory(SoftwareAttributesPojo softwareAttributesPojo){
+        return new CategoryEntity(
+                softwareAttributesPojo.getCategory(),
+                null
+        );
     }
 
 }

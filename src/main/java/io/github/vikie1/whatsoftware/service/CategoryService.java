@@ -19,18 +19,23 @@ public class CategoryService {
 
     //Read
     public List<CategoryEntity> getAllCategories(){ return new ArrayList<CategoryEntity>(categoryRepository.findAll()); }
-    public List<CategoryEntity> getAllByCategory(String category) { return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category)); }
-    public List<CategoryEntity> getAllSoftwareByName(String software){ return new ArrayList<CategoryEntity>(categoryRepository.findAllBySoftwareAllIgnoreCase(software)); }
+    public CategoryEntity getCategory(String category) { return categoryRepository.findAllByCatNameAllIgnoreCase(category); }
+    //public List<CategoryEntity> getAllSoftwareByName(String software){ return new ArrayList<CategoryEntity>(categoryRepository.findAllBySoftwareAllIgnoreCase(software)); }
     public List<CategoryEntity> getAllByNestedCategory(String nestedCategory){
         return new ArrayList<CategoryEntity>(categoryRepository.findAllByNestedCategoryAllIgnoreCase(nestedCategory));
     }
-    public List<CategoryEntity> getCategoriesBySoftwareName(String software){
-        CategoryEntity category = categoryRepository.findBySoftwareAllIgnoreCase(software);
-        return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category.getCatName()));
-    }
+//    public List<CategoryEntity> getCategoriesBySoftwareName(String software){
+//        CategoryEntity category = categoryRepository.findBySoftwareAllIgnoreCase(software);
+//        return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category.getCatName()));
+//    }
     public List<CategoryEntity> getCategoriesByNestedCategory(String nestedCategory){
         CategoryEntity category = categoryRepository.findByNestedCategoryAllIgnoreCase(nestedCategory);
         return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category.getCatName()));
+    }
+    public boolean isNested(String catName) throws CategoryNotFoundException {
+        if (categoryRepository.existsByNestedCategoryAllIgnoreCase(catName)) return true;
+        else if (categoryRepository.existsByCatNameAllIgnoreCase(catName)) return false;
+        else throw new CategoryNotFoundException("Category " + catName + " Does not exist");
     }
 
     //Update
@@ -39,9 +44,9 @@ public class CategoryService {
         if (categoryRepository.existsByNestedCategoryAllIgnoreCase(newCategory.getNestedCategory())){
             oldCategory = categoryRepository.findByNestedCategoryAllIgnoreCase(newCategory.getNestedCategory());
             newCategory.setId(oldCategory.getId());
-        }else if(categoryRepository.existsBySoftwareAllIgnoreCase(newCategory.getSoftware())){
-            oldCategory = categoryRepository.findBySoftwareAllIgnoreCase(newCategory.getSoftware());
-            newCategory.setId(oldCategory.getId());
+//        }else if(categoryRepository.existsBySoftwareAllIgnoreCase(newCategory.getSoftware())){
+//            oldCategory = categoryRepository.findBySoftwareAllIgnoreCase(newCategory.getSoftware());
+//            newCategory.setId(oldCategory.getId());
         }else throw new CategoryNotFoundException(
                 "Category for Software : " + newCategory.getNestedCategory()
                         + " of nestedCategory : " + newCategory.getNestedCategory()
@@ -54,7 +59,7 @@ public class CategoryService {
     public void deleteCategory(CategoryEntity category){ categoryRepository.delete(category); }
     public void clearCategories(){ categoryRepository.deleteAll(); }
     public void deleteById(Long id){ categoryRepository.deleteById(id); }
-    public void deleteBySoftware(String software){ categoryRepository.deleteBySoftwareAllIgnoreCase(software);}
+    //public void deleteBySoftware(String software){ categoryRepository.deleteBySoftwareAllIgnoreCase(software);}
 
     static class CategoryNotFoundException extends Exception{
         CategoryNotFoundException(String errorMessage){

@@ -21,7 +21,8 @@ public class AccessAuthorisation extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/api/**");
 
         http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST).hasAnyRole("ADMIN", "USER")
+                //.antMatchers(HttpMethod.POST).hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.POST).permitAll()
                 .antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/**", "/**").permitAll();

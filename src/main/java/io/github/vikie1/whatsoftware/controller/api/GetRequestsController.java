@@ -1,6 +1,8 @@
 package io.github.vikie1.whatsoftware.controller.api;
 
+import io.github.vikie1.whatsoftware.entity.CategoryEntity;
 import io.github.vikie1.whatsoftware.entity.SoftwareOfTheDayEntity;
+import io.github.vikie1.whatsoftware.service.CategoryService;
 import io.github.vikie1.whatsoftware.service.SoftwareOfTheDayService;
 import io.github.vikie1.whatsoftware.util.DayOfTheWeek;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController @RequestMapping("/api")
 public class GetRequestsController {
 
     @Autowired
     SoftwareOfTheDayService softwareOfTheDayService;
+    @Autowired
+    CategoryService categoryService;
 
     //Requests for software of the day
     @GetMapping("/SotD")
@@ -51,6 +56,14 @@ public class GetRequestsController {
             catch (IOException e) { e.printStackTrace(); }
         }
         return softwareOfTheDayService.getWeeklySoftware();
+    }
+
+    //Get software Categories
+    @GetMapping("/categories")
+    public HashMap<String, List<CategoryEntity>> getCategories(){
+        HashMap<String, List<CategoryEntity>> response = new HashMap<>();
+        response.put("cat", categoryService.getAllCategories());
+        return response;
     }
 
 }

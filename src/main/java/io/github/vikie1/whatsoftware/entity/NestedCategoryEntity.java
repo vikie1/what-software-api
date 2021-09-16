@@ -12,7 +12,7 @@ import java.util.Set;
  */
 
 @Entity @Table( name = "nested_category" )
-public class NestedCategoryEntity extends CategoryEntitiesAbstraction {
+public class NestedCategoryEntity{
 
     @Id @Column(name = "id", nullable = false) @GeneratedValue
     private Long id;

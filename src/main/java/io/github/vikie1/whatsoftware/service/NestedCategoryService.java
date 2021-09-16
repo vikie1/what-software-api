@@ -18,8 +18,8 @@ public class NestedCategoryService {
     public void addNestedCategory(NestedCategoryEntity nestedCategory){ nestedCategoryRepository.save(nestedCategory); }
 
     //Read
-    public List<NestedCategoryEntity> getAllByNestedCategory(String nestedCategory){
-        return new ArrayList<NestedCategoryEntity>(nestedCategoryRepository.findAllByCatNameAllIgnoreCase(nestedCategory));
+    public NestedCategoryEntity getNestedCategory(String nestedCategory){
+        return nestedCategoryRepository.findAllByCatNameAllIgnoreCase(nestedCategory);
     }
     public List<NestedCategoryEntity> getByParentCategory(String parentCategory){//no software expected
         return new ArrayList<NestedCategoryEntity>(nestedCategoryRepository.findAllByParentCategoryAllIgnoreCase(parentCategory));
