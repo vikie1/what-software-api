@@ -2,6 +2,7 @@ package io.github.vikie1.whatsoftware.service;
 
 import io.github.vikie1.whatsoftware.entity.CategoryEntity;
 import io.github.vikie1.whatsoftware.entity.NestedCategoryEntity;
+import io.github.vikie1.whatsoftware.entity.SoftwareEntity;
 import io.github.vikie1.whatsoftware.entity.TypeEntity;
 import io.github.vikie1.whatsoftware.pojo.DeriveEntityFromPojo;
 import io.github.vikie1.whatsoftware.pojo.SoftwareAttributesPojo;
@@ -50,17 +51,23 @@ public class ControllerLinkService {
     }
 
     //GET Requests
-    public HashMap<String, List<TypeEntity>> getSoftwareByCategory(String category) {
+    public HashMap<String, List<SoftwareEntity>> getSoftwareByCategory(String category) {
+        HashMap<String, List<SoftwareEntity>> typeEntityHashMap = new HashMap<>();
+        List<SoftwareEntity> entityList;
+        entityList = new ArrayList<>(softwareService.getSoftwareByCategory(categoryService.getCategory(category)));
+        typeEntityHashMap.put("list", entityList);
+        return typeEntityHashMap;
+    }
+    public HashMap<String, List<TypeEntity>> getByType(String category){
         HashMap<String, List<TypeEntity>> typeEntityHashMap = new HashMap<>();
         List<TypeEntity> entityList = new ArrayList<>();
         try {
-            if (categoryService.isNested(category))
-                entityList.addAll(typeService.getAllByNestedCategory(nestedCategoryService.getNestedCategory(category)));
+            if (categoryService.isNested(category)) entityList.addAll(typeService.getAllByNestedCategory(nestedCategoryService.getNestedCategory(category)));
             else entityList.addAll(typeService.getAllByCategory(categoryService.getCategory(category)));
         } catch (CategoryService.CategoryNotFoundException e) {
             e.printStackTrace();
         }
-        typeEntityHashMap.put("list", entityList);
+        typeEntityHashMap.put(category, entityList);
         return typeEntityHashMap;
     }
 }

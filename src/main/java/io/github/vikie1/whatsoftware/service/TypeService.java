@@ -16,9 +16,20 @@ public class TypeService {
 
     @Autowired
     TypeRepository typeRepository;
+    @Autowired
+    CategoryService categoryService;
 
     //Create
-    public void addType(TypeEntity type){ typeRepository.save(type); }
+    public void addType(TypeEntity type){
+        CategoryEntity givenCategory = type.getCategoryEntity();
+        CategoryEntity neededCategory = categoryService.getCategory(givenCategory.getCatName());
+        if (neededCategory != null) type.setCategoryEntity(neededCategory);
+        else {
+            categoryService.addCategory(givenCategory);
+            addType(type);
+        }
+        typeRepository.save(type);
+    }
     public void addTypeFromRawData(String type, CategoryEntitiesAbstraction category, boolean isNested){
         typeRepository.save( new TypeEntity(type, category, isNested));
     }
@@ -29,6 +40,10 @@ public class TypeService {
     }
     public List<TypeEntity> getAllByCategory(CategoryEntity categoryEntity){
         return new ArrayList<TypeEntity>( typeRepository.findAllByCategoryEntity(categoryEntity));
+    }
+    public TypeEntity getType(String type){
+        if (!typeRepository.existsByTypeAllIgnoreCase(type)) return null;
+        return typeRepository.findByTypeAllIgnoreCase(type);
     }
 
 }

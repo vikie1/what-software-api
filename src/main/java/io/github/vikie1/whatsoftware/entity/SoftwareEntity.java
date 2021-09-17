@@ -1,5 +1,6 @@
 package io.github.vikie1.whatsoftware.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.vikie1.whatsoftware.service.TypeService;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ public class SoftwareEntity {
 
     @Id @Column(name = "id", nullable = false) @GeneratedValue
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
     private String description;
     @Column(nullable = false)
@@ -29,9 +30,8 @@ public class SoftwareEntity {
     public String getName() { return name; }
     public String getDescription() { return description; }
     public String getDownloadUrl() { return downloadUrl; }
-    public TypeEntity getTypeEntity() {
-        return typeEntity;
-    }
+    @JsonIgnore
+    public TypeEntity getTypeEntity() { return typeEntity; }
 
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }

@@ -1,22 +1,46 @@
 package io.github.vikie1.whatsoftware.service;
 
+import io.github.vikie1.whatsoftware.entity.CategoryEntity;
 import io.github.vikie1.whatsoftware.entity.SoftwareEntity;
+import io.github.vikie1.whatsoftware.entity.TypeEntity;
 import io.github.vikie1.whatsoftware.repository.SoftwareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SoftwareService {
 
     @Autowired
+    TypeService typeService;
+    @Autowired
     SoftwareRepository softwareRepository;
 
     //Create
-    public void addSoftware(SoftwareEntity softwareEntity) { softwareRepository.save(softwareEntity); }
+    public void addSoftware(SoftwareEntity softwareEntity) {
+        TypeEntity givenType = softwareEntity.getTypeEntity();
+        TypeEntity neededType = typeService.getType(givenType.getType());
+        if (neededType != null) softwareEntity.setTypeEntity(neededType);
+        else {
+            typeService.addType(givenType);
+            addSoftware(softwareEntity);
+        }
+        softwareRepository.save(softwareEntity);
+    }
 
     //Read
     public SoftwareEntity getById(Long id){ return softwareRepository.getById(id); }
     public SoftwareEntity getBySoftwareName(String name) { return softwareRepository.findByNameAllIgnoreCase(name); }
+    public List<SoftwareEntity> getSoftwareByCategory(CategoryEntity category){
+        List<TypeEntity> types = typeService.getAllByCategory(category);
+        List<SoftwareEntity> software = new ArrayList<>();
+        for(TypeEntity type : types){
+            software.addAll(softwareRepository.findAllByTypeEntity(type));
+        }
+        return software;
+    }
 
     //Update
     public void updateSoftware(SoftwareEntity newSoftwareEntity) throws SoftwareNotFoundException {

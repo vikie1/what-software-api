@@ -1,8 +1,11 @@
 package io.github.vikie1.whatsoftware.controller.api;
 
 import io.github.vikie1.whatsoftware.entity.CategoryEntity;
+import io.github.vikie1.whatsoftware.entity.SoftwareEntity;
 import io.github.vikie1.whatsoftware.entity.SoftwareOfTheDayEntity;
+import io.github.vikie1.whatsoftware.entity.TypeEntity;
 import io.github.vikie1.whatsoftware.service.CategoryService;
+import io.github.vikie1.whatsoftware.service.ControllerLinkService;
 import io.github.vikie1.whatsoftware.service.SoftwareOfTheDayService;
 import io.github.vikie1.whatsoftware.util.DayOfTheWeek;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class GetRequestsController {
     SoftwareOfTheDayService softwareOfTheDayService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    ControllerLinkService controllerLinkService;
 
     //Requests for software of the day
     @GetMapping("/SotD")
@@ -60,10 +65,13 @@ public class GetRequestsController {
 
     //Get software Categories
     @GetMapping("/categories")
-    public HashMap<String, List<CategoryEntity>> getCategories(){
-        HashMap<String, List<CategoryEntity>> response = new HashMap<>();
+    public HashMap<String, List<String>> getCategories(){
+        HashMap<String, List<String>> response = new HashMap<>();
         response.put("cat", categoryService.getAllCategories());
         return response;
     }
+    //Get software of a certain category
+    @GetMapping("/category/{name}")
+    public CategoryEntity getCategorised(@PathVariable String name){ return categoryService.getCategory(name); }
 
 }

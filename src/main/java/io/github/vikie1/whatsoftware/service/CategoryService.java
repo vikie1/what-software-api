@@ -18,8 +18,12 @@ public class CategoryService {
     public void addCategory(CategoryEntity categoryEntity){ categoryRepository.save(categoryEntity); }
 
     //Read
-    public List<CategoryEntity> getAllCategories(){ return new ArrayList<CategoryEntity>(categoryRepository.findAll()); }
-    public CategoryEntity getCategory(String category) { return categoryRepository.findAllByCatNameAllIgnoreCase(category); }
+    public List<String> getAllCategories(){ return new ArrayList<String>(categoryRepository.findAllDistinctCatName()); }
+    public CategoryEntity getCategory(String category) {
+        if (!categoryRepository.existsByCatNameAllIgnoreCase(category)) return null;
+        return categoryRepository.findByCatNameAllIgnoreCase(category);
+    }
+    public List<CategoryEntity> getCategories(String category) { return categoryRepository.findByCatNameAllIgnoreCase(category); }
     //public List<CategoryEntity> getAllSoftwareByName(String software){ return new ArrayList<CategoryEntity>(categoryRepository.findAllBySoftwareAllIgnoreCase(software)); }
     public List<CategoryEntity> getAllByNestedCategory(String nestedCategory){
         return new ArrayList<CategoryEntity>(categoryRepository.findAllByNestedCategoryAllIgnoreCase(nestedCategory));
@@ -30,7 +34,7 @@ public class CategoryService {
 //    }
     public List<CategoryEntity> getCategoriesByNestedCategory(String nestedCategory){
         CategoryEntity category = categoryRepository.findByNestedCategoryAllIgnoreCase(nestedCategory);
-        return new ArrayList<CategoryEntity>(categoryRepository.findAllByCatNameAllIgnoreCase(category.getCatName()));
+        return new ArrayList<CategoryEntity>(categoryRepository.findByCatNameAllIgnoreCase(category.getCatName()));
     }
     public boolean isNested(String catName) throws CategoryNotFoundException {
         if (categoryRepository.existsByNestedCategoryAllIgnoreCase(catName)) return true;

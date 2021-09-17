@@ -1,7 +1,5 @@
 package io.github.vikie1.whatsoftware.entity;
 
-import io.github.vikie1.whatsoftware.pojo.CategoryEntitiesAbstraction;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,7 +7,7 @@ import java.util.Set;
 public class CategoryEntity{
     @Id @Column(name = "id", nullable = false) @GeneratedValue
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String catName;
     @Column(unique = true)
     private String nestedCategory;
@@ -25,6 +23,7 @@ public class CategoryEntity{
     public Long getId() { return id; }
     public String getCatName() { return catName; }
     public String getNestedCategory() { return nestedCategory; }
+    public Set<TypeEntity> getTypeEntity() { return typeEntity; }
 
     public void setId(Long id) { this.id = id; }
     public void setCatName(String catName) { this.catName = catName; }
