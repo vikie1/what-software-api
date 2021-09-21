@@ -1,7 +1,6 @@
 package io.github.vikie1.whatsoftware.repository;
 
 import io.github.vikie1.whatsoftware.entity.CategoryEntity;
-import io.github.vikie1.whatsoftware.entity.NestedCategoryEntity;
 import io.github.vikie1.whatsoftware.entity.TypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

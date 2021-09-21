@@ -1,7 +1,6 @@
 package io.github.vikie1.whatsoftware.pojo;
 
 import io.github.vikie1.whatsoftware.entity.CategoryEntity;
-import io.github.vikie1.whatsoftware.entity.NestedCategoryEntity;
 import io.github.vikie1.whatsoftware.entity.SoftwareEntity;
 import io.github.vikie1.whatsoftware.entity.TypeEntity;
 import org.springframework.lang.NonNull;
@@ -14,7 +13,6 @@ import org.springframework.lang.NonNull;
 
 public class DeriveEntityFromPojo {
     private CategoryEntity category;
-    private NestedCategoryEntity nestedCategory;
 
     //Construct SoftwareEntity
     static public SoftwareEntity constructSoftwareEntity(@NonNull SoftwareAttributesPojo softwareAttributesPojo){
@@ -30,28 +28,12 @@ public class DeriveEntityFromPojo {
     static public TypeEntity constructTypeEntity(@NonNull SoftwareAttributesPojo softwareAttributesPojo){
         return new TypeEntity(
                 softwareAttributesPojo.getType(),
-                constructCategory(softwareAttributesPojo),
+                createCategory(softwareAttributesPojo),
                 softwareAttributesPojo.isNested()
         );
     }
 
-    //Create **CategoryEntity via CategoryEntitiesAbstraction
-    static public CategoryEntitiesAbstraction constructCategory(@NonNull SoftwareAttributesPojo softwareAttributesPojo){
-        CategoryEntitiesAbstraction category;
-        if (softwareAttributesPojo.isNested())
-            category = new CategoryEntitiesAbstraction(null, createNestedCategory(softwareAttributesPojo));
-        else category = new CategoryEntitiesAbstraction(createCategory(softwareAttributesPojo), null);
-        return category;
-    }
-
-    private static NestedCategoryEntity createNestedCategory(SoftwareAttributesPojo softwareAttributesPojo){
-        return new NestedCategoryEntity(
-                softwareAttributesPojo.getParentCategory(),
-                softwareAttributesPojo.getCategory(),
-                softwareAttributesPojo.getSoftwareName()
-        );
-    }
-    private static CategoryEntity createCategory(SoftwareAttributesPojo softwareAttributesPojo){
+    public static CategoryEntity createCategory(SoftwareAttributesPojo softwareAttributesPojo){
         return new CategoryEntity(
                 softwareAttributesPojo.getCategory(),
                 null

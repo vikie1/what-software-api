@@ -1,7 +1,6 @@
 package io.github.vikie1.whatsoftware.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.github.vikie1.whatsoftware.pojo.CategoryEntitiesAbstraction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,15 +17,12 @@ public class TypeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "cat_id")
     private CategoryEntity categoryEntity;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinColumn(name = "nested_cat_id")
-    private NestedCategoryEntity nestedCategoryEntity;
 
 
     public TypeEntity(){}
-    public TypeEntity(String type, CategoryEntitiesAbstraction categoryEntitiesAbstraction, boolean isNested) {
+    public TypeEntity(String type, CategoryEntity category, boolean isNested) {
         this.type = type;
-        if (!isNested) setCategoryEntity(categoryEntitiesAbstraction.getCategory());
-        else setNestedCategoryEntity(categoryEntitiesAbstraction.getNestedCategory());
+        if (!isNested) setCategoryEntity(category);
     }
 
     @JsonIgnore
@@ -36,10 +32,7 @@ public class TypeEntity {
     public Set<SoftwareEntity> getSoftware() { return software; }
 
     public void setId(Long id) { this.id = id; }
-    public void setCategoryEntity(CategoryEntity cat) {
-        this.categoryEntity = cat;
-    }
-    public void setNestedCategoryEntity(NestedCategoryEntity nestedCategoryEntity) { this.nestedCategoryEntity = nestedCategoryEntity; }
+    public void setCategoryEntity(CategoryEntity cat) { this.categoryEntity = cat; }
     public void setType(String type) { this.type = type; }
     public void setSoftware(Set<SoftwareEntity> software) { this.software = software; }
 }

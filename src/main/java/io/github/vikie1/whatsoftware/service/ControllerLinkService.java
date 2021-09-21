@@ -1,7 +1,5 @@
 package io.github.vikie1.whatsoftware.service;
 
-import io.github.vikie1.whatsoftware.entity.CategoryEntity;
-import io.github.vikie1.whatsoftware.entity.NestedCategoryEntity;
 import io.github.vikie1.whatsoftware.entity.SoftwareEntity;
 import io.github.vikie1.whatsoftware.entity.TypeEntity;
 import io.github.vikie1.whatsoftware.pojo.DeriveEntityFromPojo;
@@ -21,8 +19,6 @@ public class ControllerLinkService {
     @Autowired
     CategoryService categoryService;
     @Autowired
-    NestedCategoryService nestedCategoryService;
-    @Autowired
     TypeService typeService;
 
     //POST Request
@@ -39,13 +35,9 @@ public class ControllerLinkService {
     public void putFullSoftwareDetailsUpdate(SoftwareAttributesPojo softwareAttributesPojo) {
         try {
             softwareService.updateSoftware(DeriveEntityFromPojo.constructSoftwareEntity(softwareAttributesPojo));
-            if (softwareAttributesPojo.isNested())
-                nestedCategoryService.updateNestedCategory(DeriveEntityFromPojo.constructCategory(softwareAttributesPojo).getNestedCategory());
-            else
-                categoryService.updateCategory(DeriveEntityFromPojo.constructCategory(softwareAttributesPojo).getCategory());
+            categoryService.updateCategory(DeriveEntityFromPojo.createCategory(softwareAttributesPojo));
         } catch (
-                SoftwareService.SoftwareNotFoundException |
-                        NestedCategoryService.NestedCategoryNotFoundException | CategoryService.CategoryNotFoundException e) {
+                SoftwareService.SoftwareNotFoundException | CategoryService.CategoryNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -60,13 +52,7 @@ public class ControllerLinkService {
     }
     public HashMap<String, List<TypeEntity>> getByType(String category){
         HashMap<String, List<TypeEntity>> typeEntityHashMap = new HashMap<>();
-        List<TypeEntity> entityList = new ArrayList<>();
-        try {
-            if (categoryService.isNested(category)) entityList.addAll(typeService.getAllByNestedCategory(nestedCategoryService.getNestedCategory(category)));
-            else entityList.addAll(typeService.getAllByCategory(categoryService.getCategory(category)));
-        } catch (CategoryService.CategoryNotFoundException e) {
-            e.printStackTrace();
-        }
+        List<TypeEntity> entityList = new ArrayList<>(typeService.getAllByCategory(categoryService.getCategory(category)));
         typeEntityHashMap.put(category, entityList);
         return typeEntityHashMap;
     }

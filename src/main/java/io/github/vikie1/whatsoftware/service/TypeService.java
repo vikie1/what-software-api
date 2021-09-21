@@ -1,9 +1,7 @@
 package io.github.vikie1.whatsoftware.service;
 
 import io.github.vikie1.whatsoftware.entity.CategoryEntity;
-import io.github.vikie1.whatsoftware.entity.NestedCategoryEntity;
 import io.github.vikie1.whatsoftware.entity.TypeEntity;
-import io.github.vikie1.whatsoftware.pojo.CategoryEntitiesAbstraction;
 import io.github.vikie1.whatsoftware.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,14 +28,11 @@ public class TypeService {
         }
         typeRepository.save(type);
     }
-    public void addTypeFromRawData(String type, CategoryEntitiesAbstraction category, boolean isNested){
+    public void addTypeFromRawData(String type, CategoryEntity category, boolean isNested){
         typeRepository.save( new TypeEntity(type, category, isNested));
     }
 
     //Read
-    public List<TypeEntity> getAllByNestedCategory(NestedCategoryEntity nestedCategory){
-        return new ArrayList<TypeEntity> ( typeRepository.findAllByNestedCategoryEntity(nestedCategory));
-    }
     public List<TypeEntity> getAllByCategory(CategoryEntity categoryEntity){
         return new ArrayList<TypeEntity>( typeRepository.findAllByCategoryEntity(categoryEntity));
     }
