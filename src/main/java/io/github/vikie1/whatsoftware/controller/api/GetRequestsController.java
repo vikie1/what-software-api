@@ -1,25 +1,24 @@
 package io.github.vikie1.whatsoftware.controller.api;
 
-import io.github.vikie1.whatsoftware.entity.CategoryEntity;
-import io.github.vikie1.whatsoftware.entity.SoftwareEntity;
-import io.github.vikie1.whatsoftware.entity.SoftwareOfTheDayEntity;
-import io.github.vikie1.whatsoftware.entity.TypeEntity;
-import io.github.vikie1.whatsoftware.service.CategoryService;
-import io.github.vikie1.whatsoftware.service.ControllerLinkService;
-import io.github.vikie1.whatsoftware.service.SoftwareOfTheDayService;
-import io.github.vikie1.whatsoftware.util.DayOfTheWeek;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+import io.github.vikie1.whatsoftware.entity.CategoryEntity;
+import io.github.vikie1.whatsoftware.entity.SoftwareOfTheDayEntity;
+import io.github.vikie1.whatsoftware.service.CategoryService;
+import io.github.vikie1.whatsoftware.service.SoftwareOfTheDayService;
+import io.github.vikie1.whatsoftware.util.DayOfTheWeek;
 
 @RestController @RequestMapping("/api")
 public class GetRequestsController {
@@ -28,8 +27,6 @@ public class GetRequestsController {
     SoftwareOfTheDayService softwareOfTheDayService;
     @Autowired
     CategoryService categoryService;
-    @Autowired
-    ControllerLinkService controllerLinkService;
 
     //Requests for software of the day
     @GetMapping("/SotD")

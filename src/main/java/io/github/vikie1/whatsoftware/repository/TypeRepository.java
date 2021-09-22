@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface TypeRepository extends JpaRepository<TypeEntity, Long> {
     List<TypeEntity> findAllByCategoryEntity(CategoryEntity categoryEntity);
-    List<TypeEntity> findAllByNestedCategoryEntity(NestedCategoryEntity nestedCategoryEntity);
     TypeEntity findByTypeAllIgnoreCase(String type);
     boolean existsByTypeAllIgnoreCase(String type);
 }
