@@ -1,6 +1,8 @@
 # what-software-api
 This api will contain a list of important software for various operating systems.
 
+## This Repository was permanently moved to the portfolio
+
 ## Terminology
 
 <b>Software</b> -> Any program that can run on a computer <br/>
