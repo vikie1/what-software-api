@@ -1,7 +1,7 @@
 # what-software-api
 This api will contain a list of important software for various operating systems.
 
-## This Repository was permanently moved to the portfolio
+## This Repository was permanently moved to the portfolio backend
 
 ## Terminology
 
