@@ -2,6 +2,7 @@
 This api will contain a list of important software for various operating systems.
 
 ## This Repository was permanently moved to the portfolio backend
+Little information is therefore provided
 
 ## Terminology
 
